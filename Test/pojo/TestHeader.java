@@ -1,12 +1,18 @@
 public class TestHeader {
     
+    @JsonProperty("test1_")
     public String test1;
 
+    @JsonProperty("test2")
     public String test2;
+
+    public TestHeader() {
+        super();
+    }
 
     public TestHeader(String test1, String test2) {
         super();
-        this.test1 = test1;
+        this.test1_ = test1_;
         this.test2 = test2;
     }
 
@@ -28,7 +34,7 @@ public class TestHeader {
 
     @Override
     public String toString() {
-        return "TestHeader [test1=" + test1 + ", test2=" + test2 + "]";
+        return "TestHeader [test1_=" + test1_ + ", test2=" + test2 + "]";
     }
 
 }

@@ -1,11 +1,17 @@
 {
-	"header": {
-		"test1": "1",
+	"MW_header": {
+		"test1_": "1",
 		"test2": "2"
 	},
 	"body": {
 		"test3": "3",
 		"test4": "4"
 	},
-	"test5" : "1"
+	"test5" : "1",
+	"array" : [
+		{
+			"test6" : "1",
+			"test7" : "1"
+		}
+	]
 }

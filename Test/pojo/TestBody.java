@@ -1,8 +1,14 @@
 public class TestBody {
     
+    @JsonProperty("test3")
     public String test3;
 
+    @JsonProperty("test4")
     public String test4;
+
+    public TestBody() {
+        super();
+    }
 
     public TestBody(String test3, String test4) {
         super();

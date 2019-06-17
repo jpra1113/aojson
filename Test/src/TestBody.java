@@ -4,6 +4,10 @@ public class TestBody {
 
     public String test4;
 
+    public TestBody() {
+        super();
+    }
+
     public TestBody(String test3, String test4) {
         super();
         this.test3 = test3;

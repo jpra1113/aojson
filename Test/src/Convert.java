@@ -11,6 +11,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Convert {
+	
+	public static boolean jsonProperty = true;
 
 	public static void main(String[] args) {
 		try (Stream<Path> s = Files.walk(Paths.get("json")).filter(Files::isRegularFile)) {
@@ -38,35 +40,64 @@ public class Convert {
 		Iterator<String> fieldNames = jsonNode.fieldNames();
 		while(fieldNames.hasNext()) {
 			String fieldName = fieldNames.next();
+			String originFieldName = fieldName;
+			if (jsonProperty) {
+				fieldName = fieldName.replaceAll("_", "");
+				fieldName = fieldName.substring(0, 1).toLowerCase() + fieldName.substring(1);
+			}
+			
 			String objectName = fileNamePrefix.substring(0, 1).toUpperCase() 
 					+ fileNamePrefix.substring(1) 
 					+ fieldName.substring(0, 1).toUpperCase() 
 					+ fieldName.substring(1);
-			String nodeType = jsonNode.get(fieldName).getNodeType().name();
+			String nodeType = jsonNode.get(originFieldName).getNodeType().name();
+			System.out.println(nodeType + " " + fieldName);
 			
-			if ("OBJECT".equals(nodeType)) {
-				genPojo(objectName, jsonNode.get(fieldName));
-				
-				sb.append("    public " + objectName + " " + fieldName + ";");
-				sb.append("\r\n");
-				sb.append("\r\n");
-			} else {
-				sb.append("    public String " + fieldName + ";");
-				sb.append("\r\n");
+			if (jsonProperty) {
+				sb.append("    @JsonProperty(\"" + originFieldName + "\")");
 				sb.append("\r\n");
 			}
+			
+			if ("OBJECT".equals(nodeType)) {
+				genPojo(objectName, jsonNode.get(originFieldName));
+				
+				sb.append("    public " + objectName + " " + fieldName + ";");
+			} else if ("ARRAY".equals(nodeType)) {
+				genPojo(objectName, jsonNode.get(originFieldName).get(0));
+				
+				sb.append("    public List<" + objectName + "> " + fieldName + ";");
+			} else {
+				sb.append("    public String " + fieldName + ";");
+			}
+			sb.append("\r\n");
+			sb.append("\r\n");
 		}
+		
+		sb.append("    public " + fileName + "(");
+		sb.append(") {");
+		sb.append("\r\n");
+		sb.append("        super();");
+		sb.append("\r\n");
+		sb.append("    }");
+		sb.append("\r\n");
+		sb.append("\r\n");
 		
 		int i = 0;
 		sb.append("    public " + fileName + "(");
 		fieldNames = jsonNode.fieldNames();
 		while(fieldNames.hasNext()) {
 			String fieldName = fieldNames.next();
+			String originFieldName = fieldName;
+			if (jsonProperty) {
+				fieldName = fieldName.replaceAll("_", "");
+				fieldName = fieldName.substring(0, 1).toLowerCase() + fieldName.substring(1);
+			}
+			
 			String objectName = fileNamePrefix.substring(0, 1).toUpperCase() 
 					+ fileNamePrefix.substring(1) 
 					+ fieldName.substring(0, 1).toUpperCase() 
 					+ fieldName.substring(1);
-			String nodeType = jsonNode.get(fieldName).getNodeType().name();
+			String nodeType = jsonNode.get(originFieldName).getNodeType().name();
 			
 			if (i != 0) {
 				sb.append(", ");
@@ -74,6 +105,8 @@ public class Convert {
 			
 			if ("OBJECT".equals(nodeType)) {
 				sb.append(objectName + " " + fieldName);
+			} else if ("ARRAY".equals(nodeType)) {
+				sb.append("List<" + objectName + "> " + fieldName);
 			} else {
 				sb.append("String " + fieldName);
 			}
@@ -98,14 +131,24 @@ public class Convert {
 		fieldNames = jsonNode.fieldNames();
 		while(fieldNames.hasNext()) {
 			String fieldName = fieldNames.next();
+			String originFieldName = fieldName;
+			if (jsonProperty) {
+				fieldName = fieldName.replaceAll("_", "");
+				fieldName = fieldName.substring(0, 1).toLowerCase() + fieldName.substring(1);
+			}
+			
 			String fieldNameUpper = fieldName.substring(0, 1).toUpperCase() 
 					+ fieldName.substring(1);
 			String objectName = fileNamePrefix.substring(0, 1).toUpperCase() 
 					+ fileNamePrefix.substring(1) 
 					+ fieldNameUpper;
-			String nodeType = jsonNode.get(fieldName).getNodeType().name();
+			String nodeType = jsonNode.get(originFieldName).getNodeType().name();
 			
-			if (!"OBJECT".equals(nodeType)) {
+			if ("OBJECT".equals(nodeType)) {
+				
+			} else if ("ARRAY".equals(nodeType)) {
+				objectName = "List<" + objectName + ">";
+			} else {
 				objectName = "String";
 			}
 
@@ -135,6 +178,10 @@ public class Convert {
 		fieldNames = jsonNode.fieldNames();
 		while(fieldNames.hasNext()) {
 			String fieldName = fieldNames.next();
+			if (jsonProperty) {
+				fieldName = fieldName.replaceAll("_", "");
+				fieldName = fieldName.substring(0, 1).toLowerCase() + fieldName.substring(1);
+			}
 			
 			if (i != 0) {
 				sb.append(", ");

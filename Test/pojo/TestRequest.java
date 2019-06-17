@@ -1,24 +1,35 @@
 public class TestRequest {
     
-    public TestHeader header;
+    @JsonProperty("MW_header")
+    public TestMWheader mWheader;
 
+    @JsonProperty("body")
     public TestBody body;
 
+    @JsonProperty("test5")
     public String test5;
 
-    public TestRequest(TestHeader header, TestBody body, String test5) {
+    @JsonProperty("array")
+    public List<TestArray> array;
+
+    public TestRequest() {
         super();
-        this.header = header;
+    }
+
+    public TestRequest(TestMWheader mWheader, TestBody body, String test5, List<TestArray> array) {
+        super();
+        this.MW_header = MW_header;
         this.body = body;
         this.test5 = test5;
+        this.array = array;
     }
 
-    public TestHeader getHeader() {
-        return header;
+    public TestMWheader getMWheader() {
+        return mWheader;
     }
 
-    public void setHeader(TestHeader header) {
-        this.header = header;
+    public void setMWheader(TestMWheader mWheader) {
+        this.mWheader = mWheader;
     }
 
     public TestBody getBody() {
@@ -37,9 +48,17 @@ public class TestRequest {
         this.test5 = test5;
     }
 
+    public List<TestArray> getArray() {
+        return array;
+    }
+
+    public void setArray(List<TestArray> array) {
+        this.array = array;
+    }
+
     @Override
     public String toString() {
-        return "TestRequest [header=" + header + ", body=" + body + ", test5=" + test5 + "]";
+        return "TestRequest [mWheader=" + mWheader + ", body=" + body + ", test5=" + test5 + ", array=" + array + "]";
     }
 
 }
