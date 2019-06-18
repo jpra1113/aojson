@@ -42,9 +42,10 @@ public class Convert {
 			String fieldName = fieldNames.next();
 			String originFieldName = fieldName;
 			if (jsonProperty) {
-				fieldName = fieldName.replaceAll("_", "");
-				fieldName = fieldName.substring(0, 1).toLowerCase() + fieldName.substring(1);
+				fieldName = getJsonPropertyFieldName(fieldName);
 			}
+			
+			System.out.println("[" +fieldName+"]");
 			
 			String objectName = fileNamePrefix.substring(0, 1).toUpperCase() 
 					+ fileNamePrefix.substring(1) 
@@ -89,8 +90,7 @@ public class Convert {
 			String fieldName = fieldNames.next();
 			String originFieldName = fieldName;
 			if (jsonProperty) {
-				fieldName = fieldName.replaceAll("_", "");
-				fieldName = fieldName.substring(0, 1).toLowerCase() + fieldName.substring(1);
+				fieldName = getJsonPropertyFieldName(fieldName);
 			}
 			
 			String objectName = fileNamePrefix.substring(0, 1).toUpperCase() 
@@ -133,8 +133,7 @@ public class Convert {
 			String fieldName = fieldNames.next();
 			String originFieldName = fieldName;
 			if (jsonProperty) {
-				fieldName = fieldName.replaceAll("_", "");
-				fieldName = fieldName.substring(0, 1).toLowerCase() + fieldName.substring(1);
+				fieldName = getJsonPropertyFieldName(fieldName);
 			}
 			
 			String fieldNameUpper = fieldName.substring(0, 1).toUpperCase() 
@@ -179,8 +178,7 @@ public class Convert {
 		while(fieldNames.hasNext()) {
 			String fieldName = fieldNames.next();
 			if (jsonProperty) {
-				fieldName = fieldName.replaceAll("_", "");
-				fieldName = fieldName.substring(0, 1).toLowerCase() + fieldName.substring(1);
+				fieldName = getJsonPropertyFieldName(fieldName);
 			}
 			
 			if (i != 0) {
@@ -199,5 +197,24 @@ public class Convert {
 		sb.append("}");
 		
 		Files.write(Paths.get("pojo/" + fileName + ".java"), sb.toString().getBytes());
+	}
+	
+	private static String getJsonPropertyFieldName(String fieldName) {
+		String result = "";
+		fieldName = fieldName.toLowerCase();
+		if (fieldName.indexOf("_") != -1) {
+			String[] fieldNames = fieldName.split("_");
+			for (int i = 0; i < fieldNames.length; i++) {
+				String s = fieldNames[i];
+				if (i > 0) {
+					result += s.substring(0, 1).toUpperCase() + s.substring(1);
+				} else {
+					result += s;
+				}
+			}
+		} else {
+			result = fieldName;
+		}
+		return result;
 	}
 }

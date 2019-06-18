@@ -1,6 +1,10 @@
 {
 	"MW_header": {
-		"test1_": "1",
+		"test1": "1",
+		"test2": "2"
+	},
+	"MW_HEADER_TEST": {
+		"test1_TEST": "1",
 		"test2": "2"
 	},
 	"body": {

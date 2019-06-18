@@ -1,7 +1,10 @@
 public class TestRequest {
     
     @JsonProperty("MW_header")
-    public TestMWheader mWheader;
+    public TestMwHeader mwHeader;
+
+    @JsonProperty("MW_HEADER_TEST")
+    public TestMwHeaderTest mwHeaderTest;
 
     @JsonProperty("body")
     public TestBody body;
@@ -16,20 +19,29 @@ public class TestRequest {
         super();
     }
 
-    public TestRequest(TestMWheader mWheader, TestBody body, String test5, List<TestArray> array) {
+    public TestRequest(TestMwHeader mwHeader, TestMwHeaderTest mwHeaderTest, TestBody body, String test5, List<TestArray> array) {
         super();
         this.MW_header = MW_header;
+        this.MW_HEADER_TEST = MW_HEADER_TEST;
         this.body = body;
         this.test5 = test5;
         this.array = array;
     }
 
-    public TestMWheader getMWheader() {
-        return mWheader;
+    public TestMwHeader getMwHeader() {
+        return mwHeader;
     }
 
-    public void setMWheader(TestMWheader mWheader) {
-        this.mWheader = mWheader;
+    public void setMwHeader(TestMwHeader mwHeader) {
+        this.mwHeader = mwHeader;
+    }
+
+    public TestMwHeaderTest getMwHeaderTest() {
+        return mwHeaderTest;
+    }
+
+    public void setMwHeaderTest(TestMwHeaderTest mwHeaderTest) {
+        this.mwHeaderTest = mwHeaderTest;
     }
 
     public TestBody getBody() {
@@ -58,7 +70,7 @@ public class TestRequest {
 
     @Override
     public String toString() {
-        return "TestRequest [mWheader=" + mWheader + ", body=" + body + ", test5=" + test5 + ", array=" + array + "]";
+        return "TestRequest [mwHeader=" + mwHeader + ", mwHeaderTest=" + mwHeaderTest + ", body=" + body + ", test5=" + test5 + ", array=" + array + "]";
     }
 
 }
