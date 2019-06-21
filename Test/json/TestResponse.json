@@ -1,0 +1,18 @@
+{
+	"MWHEADER": {
+		"MSGID": "",
+		"SOURCECHANNEL": "",
+		"TXNSEQ": "",
+		"RETURNCODE": "",
+		"RETURNDESC": "",
+		"O360SEQ": ""
+	},
+	"TRANRS": {
+		"test1": "",
+		"records": [
+			{
+				"test2": ""
+			}
+		]
+	}
+}
