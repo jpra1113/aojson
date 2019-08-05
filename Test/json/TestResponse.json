@@ -1,13 +1,13 @@
 {
-	"MWHEADER": {
-		"MSGID": "",
-		"SOURCECHANNEL": "",
-		"TXNSEQ": "",
-		"RETURNCODE": "",
-		"RETURNDESC": "",
-		"O360SEQ": ""
+	"header": {
+		"test1": "",
+		"test2": "",
+		"test3": "",
+		"test4": "",
+		"test5": "",
+		"test6": ""
 	},
-	"TRANRS": {
+	"body": {
 		"test1": "",
 		"records": [
 			{
